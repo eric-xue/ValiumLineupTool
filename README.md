@@ -8,6 +8,7 @@ Simple tool for fast lineup lookups.
 
 -Implement character sorting (Do last)
 
--Fix program looking up "/pathname/Choose a spot" when changing inputs
-
 -Seperate each module into seperate class for less bloated main func
+
+## Side Goals
+-Fix program looking up "/pathname/Choose a spot" when changing inputs (Dependent on spot don't think possible)

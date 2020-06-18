@@ -2,13 +2,24 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import glob as glob
 import os as os
+import xml.etree.ElementTree as ET
+from enum import Enum
 
 agent_list = ["Sova", "Viper", "Brimstone", "Cypher"]
 map_list = ["Bind", "Haven", "Split", "Ascent"]
 side_list = ["Attacker", "Defender"]
 spot_list = []
-picture_directory = "../pictures/maps/"
+
+inital_path = os.getcwd()
+os.chdir("../pictures/")
+picture_directory = os.getcwd()
+os.chdir(inital_path)
+
 map_dictionary = {}
+pic_tree = ET.parse(picture_directory + "\\config.xml")
+pic_root = pic_tree.getroot()
+image_list = []
+
 
 
 class CharMapKey:
@@ -75,7 +86,7 @@ class MainWindow:
 
         # Option menu for possible spots
         orig_path = os.getcwd()
-        os.chdir(picture_directory + maps.get() + "/")
+        os.chdir(picture_directory + "\\maps\\" + maps.get() + "\\")
         spot_list = glob.glob("*.jpg")
         os.chdir(orig_path)
         spot = tk.StringVar()
@@ -95,9 +106,10 @@ class MainWindow:
         def updatespot_list(*args):
             # Save original pathname to restore later
             orig_path = os.getcwd()
-            os.chdir(picture_directory + maps.get() + "/")
+            os.chdir(picture_directory + "\\maps\\" + maps.get() + "\\")
             global spot_list
             spot_list = glob.glob("*.jpg")
+            spot_list = [x.split(".jpg", 1)[0] for x in spot_list]
             haselements = False
             if len(spot_list) > 0:
                 haselements = True
@@ -114,7 +126,7 @@ class MainWindow:
         # Map Image
         # Callback function to update when map changed from dropdown
         def updatemap(*args):
-            map_path.set(picture_directory + maps.get() + "/" + maps.get() + ".png")
+            map_path.set(picture_directory + "\\maps\\" + maps.get() + "\\" + maps.get() + ".png")
             map_image = Image.open(map_path.get())
             map_image = map_image.resize((500, 500))
             map_img = ImageTk.PhotoImage(map_image)
@@ -122,7 +134,7 @@ class MainWindow:
             map_label.image = map_img
 
         map_path = tk.StringVar()
-        map_path.set(picture_directory + maps.get() + "/" + maps.get() + ".png")
+        map_path.set(picture_directory + "\\maps\\" + maps.get() + "\\" + maps.get() + ".png")
         map_image = Image.open(map_path.get())
         map_image = map_image.resize((500, 500))
         map_img = ImageTk.PhotoImage(map_image)
@@ -134,23 +146,36 @@ class MainWindow:
         # Spot Image
         # Callback function to update when spot changes
         def updatelineup(*args):
+            lineupfound = False
             try:
-                lineup_path.set(picture_directory + maps.get() + "/" + spot.get())
+                lineup_path.set(picture_directory + "\\maps\\" + maps.get() + "\\" + spot.get() + ".jpg")
                 lineup_image = Image.open(lineup_path.get())
+                lineupfound = True
             except FileNotFoundError:
                 print("File not found at " + lineup_path.get())
-                lineup_path.set("../pictures/Placeholder.jpg")
+                lineup_path.set(picture_directory + "\\placeholder.jpg")
                 lineup_image = Image.open(lineup_path.get())
+            # If lineup found, look @ xml and insert all images associated w/ lineup into array
+            if lineupfound:
+                image_list.clear()
+                print("The current spot is :" + spot.get() + " with spots")
+                for child in pic_root[agent_list.index(agent.get())][map_list.index(maps.get())][side_list.index(playing_side.get())]:
+                    if child.get('name') == spot.get():
+                        for grandchild in child:
+                            formatted_grandchild = grandchild.text.strip()
+                            formatted_grandchild.split("\n", 1)[0]
+                            image_list.append(formatted_grandchild)
+                        break
+                print(image_list)
             lineup_image = lineup_image.resize((848, 480))
             lineup_img = ImageTk.PhotoImage(lineup_image)
             lineup.configure(image=lineup_img)
             lineup.image = lineup_img
             print(lineup_path.get())
-            print("Lineup opened")
 
         lineup_path = tk.StringVar()
-        lineup_path.set("../pictures/Placeholder.jpg")
-        lineup_image = Image.open("../pictures/Placeholder.jpg")
+        lineup_path.set(picture_directory + "\\placeholder.jpg")
+        lineup_image = Image.open(picture_directory + "\\placeholder.jpg")
         lineup_image = lineup_image.resize((848, 480))
         lineup_img = ImageTk.PhotoImage(lineup_image)
         lineup = tk.Label(lineup_frame, image=lineup_img)
@@ -183,8 +208,8 @@ class MainWindow:
 
 
 def main():
-    charkeydict = init_charkey()
-    print(charkeydict)
+    # charkeydict = init_charkey()
+    # print(charkeydict)
     root = tk.Tk();
     app = MainWindow(root)
     root.mainloop()

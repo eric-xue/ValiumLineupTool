@@ -1,0 +1,42 @@
+<data>
+    <Agent name="Sova">
+        <MapName name="Bind">
+            <Side name="Attacker">
+                <Lineup name="MidtoB">
+                    <Picture>
+                        BathsToA+Default.jpg
+                    </Picture>
+                    <Picture>
+                        LongtoHeaven.jpg
+                    </Picture>
+                </Lineup>
+                <Lineup name="BathsToA+Default">
+                    <Picture>
+                        lol.jpg
+                    </Picture>
+                </Lineup>
+            </Side>
+            <Side name="Defender">
+
+            </Side>
+        </MapName>
+        <MapName name="Haven">
+
+        </MapName>
+        <MapName name="Split">
+
+        </MapName>
+        <MapName name="Ascent">
+
+        </MapName>
+    </Agent>
+    <Agent name="Viper">
+
+    </Agent>
+    <Agent name="Brimstone">
+
+    </Agent>
+    <Agent name="Cypher">
+
+    </Agent>
+</data>
