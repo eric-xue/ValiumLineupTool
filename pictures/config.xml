@@ -21,7 +21,35 @@
             </Side>
         </MapName>
         <MapName name="Haven">
-
+            <Side name="Attacker">
+                <Lineup name="ATake">
+                    <Picture>
+                        dlm3xyw.png
+                    </Picture>
+                    <Picture>
+                        OM5KR8z.png
+                    </Picture>
+                    <Picture>
+                        s7l93XW.png
+                    </Picture>
+                </Lineup>
+                <Lineup name="BTake">
+                    <Picture>
+                        64ke9OX.png
+                    </Picture>
+                    <Picture>
+                        IIYXUk5.png
+                    </Picture>
+                </Lineup>
+                <Lineup name="CTake">
+                    <Picture>
+                        mXmbOan.png
+                    </Picture>
+                    <Picture>
+                        jqT10Bv.png
+                    </Picture>
+                </Lineup>
+            </Side>
         </MapName>
         <MapName name="Split">
 
