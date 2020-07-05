@@ -21,7 +21,6 @@ pic_root = pic_tree.getroot()
 image_list = []
 
 
-
 def init_lists():
     agent_l = []
     map_l = []
@@ -33,10 +32,10 @@ def init_lists():
         map_l.append(child.get('name'))
     for child in pic_root[0][0]:
         side_l.append(child.get('name'))
-    return agent_l,map_l,side_l
+    return agent_l, map_l, side_l
 
 
-agent_list,map_list,side_list = init_lists()
+agent_list, map_list, side_list = init_lists()
 
 
 class CharMapKey:
@@ -111,7 +110,6 @@ class MainWindow:
         spot_selection = tk.OptionMenu(spot_frame, spot, *spot_list)
 
         def refresh_spot(haselements):
-            global spot_list
             if haselements:
                 spot.set("Choose a spot")
             else:
@@ -119,6 +117,8 @@ class MainWindow:
             spot_selection["menu"].delete(0, "end")
             for new_spot in spot_list:
                 spot_selection["menu"].add_command(label=new_spot, command=tk._setit(spot, new_spot))
+            print(spot_list)
+
         # Callback function to update when spot inputs change
         def updatespot_list(*args):
             # Save original pathname to restore later
@@ -127,8 +127,10 @@ class MainWindow:
 
             spot_list.clear()
             try:
-                for child in pic_root[agent_list.index(agent.get())][map_list.index(maps.get())][side_list.index(playing_side.get())]:
+                for child in pic_root[agent_list.index(agent.get())][map_list.index(maps.get())][
+                    side_list.index(playing_side.get())]:
                     spot_list.append(child.get('name'))
+                    print(spot_list)
             except:
                 spot_list.clear()
 
@@ -169,6 +171,7 @@ class MainWindow:
         # Callback function to update when lineup spot changed by user
         current_picture = tk.IntVar()
         current_picture.set(0)
+
         def updatelineup(*args):
             nextlineup = False
             lineupfound = False
@@ -180,7 +183,7 @@ class MainWindow:
                     side_list.index(playing_side.get())].findall("Lineup"):
                     if lineup_xml.get("name") == spot.get():
                         # Properly format jpg name ie get rid of whitespace+newlines
-                        lineup_path_construct += lineup_xml.find("Picture").text.replace("\n","").strip()
+                        lineup_path_construct += lineup_xml.find("Picture").text.replace("\n", "").strip()
                         break
 
                 lineup_path.set(lineup_path_construct)
@@ -193,7 +196,8 @@ class MainWindow:
             # If lineup found, look @ xml and insert all images associated w/ lineup into array
             if lineupfound:
                 # Add all pictures in lineup xml to an array
-                for child in pic_root[agent_list.index(agent.get())][map_list.index(maps.get())][side_list.index(playing_side.get())]:
+                for child in pic_root[agent_list.index(agent.get())][map_list.index(maps.get())][
+                    side_list.index(playing_side.get())]:
                     if child.get("name") == spot.get():
                         for grandchild in child:
                             formatted_grandchild = grandchild.text.strip()
@@ -205,7 +209,6 @@ class MainWindow:
             lineup_img = ImageTk.PhotoImage(lineup_image)
             lineup.configure(image=lineup_img)
             lineup.image = lineup_img
-
 
         lineup_path = tk.StringVar()
         lineup_path.set(picture_directory + "\\placeholder.jpg")
@@ -228,7 +231,7 @@ class MainWindow:
             if len(image_list) == 0 or len(image_list) == 1:
                 pass
             else:
-                current_picture.set(value=(current_picture.get()-1) % len(image_list))
+                current_picture.set(value=(current_picture.get() - 1) % len(image_list))
             # print("To: " + str(current_picture.get()))
 
         def next_lineimage():
@@ -243,7 +246,8 @@ class MainWindow:
         # Change picture to next in array
         def change_lineup(*args):
             # print(image_list)
-            lineup_path_construct = picture_directory + "\\maps\\" + maps.get() + "\\" + image_list[current_picture.get()]
+            lineup_path_construct = picture_directory + "\\maps\\" + maps.get() + "\\" + image_list[
+                current_picture.get()]
             lineup_path.set(lineup_path_construct)
             lineup_image = Image.open(lineup_path.get())
             lineup_image = lineup_image.resize((848, 480))
@@ -265,7 +269,7 @@ class MainWindow:
 def main():
     # charkeydict = init_charkey()
     # # print(charkeydict)
-    root = tk.Tk();
+    root = tk.Tk()
     app = MainWindow(root)
     root.mainloop()
 
