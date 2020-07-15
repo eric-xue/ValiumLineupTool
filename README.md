@@ -31,3 +31,7 @@ Simple tool for fast lineup lookups.
 > **Bugs**
 >- Occasionally, when switching to new lineup, may have to press next twice in order to go to next image. 
 >Believe this is related to current_picture. May have been fixed.  
+### 7/15
+> **Changes**
+>- Added image resizing to reduce load time if large file such as 5mb image used. 
+>- Added multiprocessing so resizing & main program can run at same time.

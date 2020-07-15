@@ -3,6 +3,9 @@ from PIL import ImageTk, Image
 import glob as glob
 import os as os
 import xml.etree.ElementTree as ET
+from threading import Thread
+from multiprocessing import Process
+from tkinter import messagebox
 from enum import Enum
 
 agent_list = []
@@ -19,6 +22,22 @@ map_dictionary = {}
 pic_tree = ET.parse(picture_directory + "\\config.xml")
 pic_root = pic_tree.getroot()
 image_list = []
+
+def resize_init():
+    # https://stackoverflow.com/questions/21517879/python-pil-resize-all-images-in-a-folder
+    pictures = os.listdir(picture_directory + "\\maps")
+    for filename in glob.iglob(picture_directory + "\\maps\\**\\*.jpg", recursive=True):
+        print(filename)
+        im = Image.open(filename)
+        imResize = im.resize((848, 480), Image.ANTIALIAS)
+        imResize.save(filename, 'JPEG', quality=100)
+    print("DONE WITH JPG")
+    for filename in glob.iglob(picture_directory + "\\maps\\**\\*.png", recursive=True):
+        print(filename)
+        im = Image.open(filename)
+        imResize = im.resize((848, 480), Image.ANTIALIAS)
+        imResize.save(filename, 'PNG', quality=100)
+    print("DONE WITH PNG")
 
 
 def init_lists():
@@ -193,6 +212,7 @@ class MainWindow:
                 # print("Lineup image not found")
                 lineup_path.set(picture_directory + "\\placeholder.jpg")
                 lineup_image = Image.open(lineup_path.get())
+                lineup_image = lineup_image.resize((848, 480))
             # If lineup found, look @ xml and insert all images associated w/ lineup into array
             if lineupfound:
                 # Add all pictures in lineup xml to an array
@@ -205,7 +225,6 @@ class MainWindow:
                             image_list.append(formatted_grandchild)
                         break
             # Formatting
-            lineup_image = lineup_image.resize((848, 480))
             lineup_img = ImageTk.PhotoImage(lineup_image)
             lineup.configure(image=lineup_img)
             lineup.image = lineup_img
@@ -266,13 +285,17 @@ class MainWindow:
         lineup_button_next.grid(row=0, column=1, padx=10)
 
 
-def main():
-    # charkeydict = init_charkey()
-    # # print(charkeydict)
+def prog_init():
     root = tk.Tk()
     app = MainWindow(root)
     root.mainloop()
 
+
+def main():
+    # charkeydict = init_charkey()
+    # # print(charkeydict)
+    Process(target=resize_init).start()
+    Process(target=prog_init).start()
 
 if __name__ == "__main__":
     main()
