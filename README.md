@@ -35,3 +35,11 @@ Simple tool for fast lineup lookups.
 > **Changes**
 >- Added image resizing to reduce load time if large file such as 5mb image used. 
 >- Added multiprocessing so resizing & main program can run at same time.
+### 7/31
+> **Changes**
+>- Added menu bar with option to edit xml.
+>- Edit option allows user to add and remove images without having to directly interact with the xml file itself.
+>(Currently, user must input image name. Method to know which files you can add/remove will be added.)
+>
+> **To do**
+>- Implement inheritance for the remove and add windows as large part of the code is exact same.

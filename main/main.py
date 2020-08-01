@@ -1,12 +1,11 @@
 import tkinter as tk
-from PIL import ImageTk, Image
+from edit_window import edit_window
+from PIL import ImageTk, Image, ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 import glob as glob
 import os as os
-import xml.etree.ElementTree as ET
-from threading import Thread
+from lxml import etree as ET
 from multiprocessing import Process
-from tkinter import messagebox
-from enum import Enum
 
 agent_list = []
 map_list = []
@@ -19,7 +18,8 @@ picture_directory = os.getcwd()
 os.chdir(inital_path)
 
 map_dictionary = {}
-pic_tree = ET.parse(picture_directory + "\\config.xml")
+parser = ET.XMLParser(remove_blank_text=True)
+pic_tree = ET.parse(picture_directory + "\\config.xml",parser)
 pic_root = pic_tree.getroot()
 image_list = []
 
@@ -27,17 +27,14 @@ def resize_init():
     # https://stackoverflow.com/questions/21517879/python-pil-resize-all-images-in-a-folder
     pictures = os.listdir(picture_directory + "\\maps")
     for filename in glob.iglob(picture_directory + "\\maps\\**\\*.jpg", recursive=True):
-        print(filename)
         im = Image.open(filename)
         imResize = im.resize((848, 480), Image.ANTIALIAS)
         imResize.save(filename, 'JPEG', quality=100)
-    print("DONE WITH JPG")
     for filename in glob.iglob(picture_directory + "\\maps\\**\\*.png", recursive=True):
-        print(filename)
         im = Image.open(filename)
         imResize = im.resize((848, 480), Image.ANTIALIAS)
         imResize.save(filename, 'PNG', quality=100)
-    print("DONE WITH PNG")
+    print("Done")
 
 
 def init_lists():
@@ -86,8 +83,28 @@ def init_charkey():
 class MainWindow:
     def __init__(self, master):
         self.master = master
+        self.master.title("Valorant Lineup Tool")
         self.main_frame = tk.Frame(self.master)
+        self.main_frame['bg'] = '#181818'
         self.main_frame.pack()
+        # Create menu
+        menu = tk.Menu(self.master)
+        self.master.option_add('*tearOff', False)
+        self.master.config(menu=menu)
+
+
+        def client_exit():
+            self.master.destroy()
+        def client_edit():
+            edit_win = edit_window(master,agent_list, map_list, pic_tree)
+
+        filemenu = tk.Menu(menu)
+        filemenu.add_command(label="Exit", command=client_exit)
+        edit = tk.Menu(menu)
+        edit.add_command(label="Edit", command=client_edit)
+        menu.add_cascade(label="File", menu=filemenu)
+        menu.add_cascade(label="Edit", menu=edit)
+
         # Create child frames
         selection_frame = tk.Frame(self.main_frame, width=400, height=20)
         selection_frame.grid(row=0, column=0)
@@ -96,6 +113,7 @@ class MainWindow:
         map_frame = tk.Frame(self.main_frame)
         map_frame.grid(row=0, column=1)
         lineup_frame = tk.Frame(self.main_frame)
+        lineup_frame['bg'] = '#181818'
         lineup_frame.grid(row=1, column=1)
 
         # Option menu using above char list
@@ -161,7 +179,7 @@ class MainWindow:
 
         updatespot_list()
         spot_selection.grid(row=0)
-        spot_selection.configure(width=15, height=2)
+        spot_selection.configure(height=2, width=40)
         maps.trace("w", updatespot_list)
         agent.trace("w", updatespot_list)
         playing_side.trace("w", updatespot_list)
@@ -283,6 +301,7 @@ class MainWindow:
         lineup_button_back.grid(row=0, column=0, padx=10)
         lineup_button_next = tk.Button(lineup_buttonframe, text="Next", command=next_lineimage)
         lineup_button_next.grid(row=0, column=1, padx=10)
+
 
 
 def prog_init():

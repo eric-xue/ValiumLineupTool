@@ -1,70 +1,50 @@
+<?xml version='1.0' encoding='UTF8'?>
 <data>
-    <Agent name="Sova">
-        <MapName name="Bind">
-            <Side name="Attacker">
-                <Lineup name="MidtoB">
-                    <Picture>
-                        BathsToA+Default.jpg
-                    </Picture>
-                    <Picture>
-                        LongtoHeaven.jpg
-                    </Picture>
-                </Lineup>
-                <Lineup name="BathsToA+Default">
-                    <Picture>
-                        lol.jpg
-                    </Picture>
-                </Lineup>
-            </Side>
-            <Side name="Defender">
-
-            </Side>
-        </MapName>
-        <MapName name="Haven">
-            <Side name="Attacker">
-                <Lineup name="ATake">
-                    <Picture>
-                        dlm3xyw.png
-                    </Picture>
-                    <Picture>
-                        OM5KR8z.png
-                    </Picture>
-                    <Picture>
-                        s7l93XW.png
-                    </Picture>
-                </Lineup>
-                <Lineup name="BTake">
-                    <Picture>
-                        64ke9OX.png
-                    </Picture>
-                    <Picture>
-                        IIYXUk5.png
-                    </Picture>
-                </Lineup>
-                <Lineup name="CTake">
-                    <Picture>
-                        mXmbOan.png
-                    </Picture>
-                    <Picture>
-                        jqT10Bv.png
-                    </Picture>
-                </Lineup>
-            </Side>
-        </MapName>
-        <MapName name="Split">
-
-        </MapName>
-        <MapName name="Ascent">
-
-        </MapName>
-    </Agent>
-    <Agent name="Viper">
-
-    </Agent>
-    <Agent name="Brimstone">
-
-    </Agent>
-    <Agent name="Cypher">
-
-    </Agent>
+  <Agent name="Sova">
+    <MapName name="Bind">
+      <Side name="Attacker">
+        <Lineup name="T to Heaven">
+          <Picture>TtoHeaven1.png</Picture>
+          <Picture>TtoHeaven2.png</Picture>
+          <Picture>TtoHeavenresult.png</Picture>
+        </Lineup>
+        <Lineup name="A short to A site - 1 bounce">
+          <Picture>AshorttoAsite.png</Picture>
+          <Picture>AshorttoAsite1bounce.png</Picture>
+        </Lineup>
+        <Lineup name="A short to A site - 2 bounce">
+          <Picture>AshorttoAsite.png</Picture>
+          <Picture>AshorttoAsite2bounce.png</Picture>
+        </Lineup>
+        <Lineup name="A short to Heaven">
+          <Picture>AshorttoHeaven.png</Picture>
+          <Picture>AshorttoHeaven1.png</Picture>
+          <Picture>AshorttoHeavenresult.png</Picture>
+        </Lineup>
+      </Side>
+      <Side name="Defender"/>
+    </MapName>
+    <MapName name="Haven">
+      <Side name="Attacker">
+        <Lineup name="ATake">
+          <Picture>dlm3xyw.png</Picture>
+          <Picture>OM5KR8z.png</Picture>
+          <Picture>s7l93XW.png</Picture>
+        </Lineup>
+        <Lineup name="BTake">
+          <Picture>64ke9OX.png</Picture>
+          <Picture>IIYXUk5.png</Picture>
+        </Lineup>
+        <Lineup name="CTake">
+          <Picture>mXmbOan.png</Picture>
+          <Picture>jqT10Bv.png</Picture>
+        </Lineup>
+      </Side>
+    </MapName>
+    <MapName name="Split"/>
+    <MapName name="Ascent"/>
+  </Agent>
+  <Agent name="Viper"/>
+  <Agent name="Brimstone"/>
+  <Agent name="Cypher"/>
 </data>
