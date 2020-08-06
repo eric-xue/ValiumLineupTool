@@ -43,3 +43,9 @@ Simple tool for fast lineup lookups.
 >
 > **To do**
 >- Implement inheritance for the remove and add windows as large part of the code is exact same.
+### 8/6
+> **Changes**
+>- Implemented better xml editing for adding and removing pictures.
+>>**ADD**: User only allowed to add pictures that are not already part of the xml ie. no duplicate pictures.
+>>
+>>**REMOVE**: User only allowed to remove pictures that are part of the xml ie. can't input invalid name

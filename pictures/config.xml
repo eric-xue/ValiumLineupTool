@@ -3,11 +3,7 @@
   <Agent name="Sova">
     <MapName name="Bind">
       <Side name="Attacker">
-        <Lineup name="T to Heaven">
-          <Picture>TtoHeaven1.png</Picture>
-          <Picture>TtoHeaven2.png</Picture>
-          <Picture>TtoHeavenresult.png</Picture>
-        </Lineup>
+        <Lineup name="T to Heaven"/>
         <Lineup name="A short to A site - 1 bounce">
           <Picture>AshorttoAsite.png</Picture>
           <Picture>AshorttoAsite1bounce.png</Picture>
